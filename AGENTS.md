@@ -2,61 +2,80 @@
 
 Guidelines for AI assistants (e.g., Codex, GitHub Copilot) contributing to this repo.
 
-## Golden rules
+## Golden Rules
 
-- Make small, correct, reviewable changes. Prefer the simplest solution that fits existing patterns.
-- Keep diffs minimal; don't refactor unrelated code.
-- Prefer existing repo patterns over general best practices.
-- Don't add dependencies unless clearly necessary (explain why).
-- You have access to skills in `.github/skills` for project-specific best practices and patterns.
+- Make small, correct, reviewable changes
+- Keep diffs minimal; don't refactor unrelated code
+- Prefer existing repo patterns over general best practices
+- Don't add dependencies unless clearly necessary
 
 ## Tech Stack
 
 - **Framework**: ASP.NET Core 10.0 (LTS) with Blazor Web App
 - **Language**: C# 14
+- **Architecture**: Clean Architecture (Simplified)
 - **UI**: Blazor components with Server-Side Rendering (SSR)
 - **Styling**: Tailwind CSS 4.x
-- **Linting/formatting**: `dotnet format` / Roslyn Analyzers
-- **Testing**: xUnit + bUnit (if tests exist)
+- **Testing**: xUnit + bUnit
+- **Package Management**: Central Package Management (Directory.Packages.props)
 
 ## Project Structure
 
 ```
-web/
-├── Components/           # Razor components
-│   ├── Layout/          # Layout components
-│   └── Pages/           # Routable page components
-├── Styles/              # Tailwind CSS source files
-├── wwwroot/             # Static assets
-├── Program.cs           # App entry point
-└── Web.csproj           # Project configuration
+/
+├── src/
+│   ├── Web/                 # Blazor UI (entry point)
+│   └── Shared/              # Shared library (domain, interfaces)
+├── tests/
+│   └── Web.Tests/           # Unit + component tests
+├── AgentToolkit.sln         # Solution file
+├── Directory.Build.props    # Shared build properties
+├── Directory.Packages.props # Central Package Management
+└── global.json              # SDK version
 ```
 
 ## Quality Bar
 
-Run these from the `web/` directory:
+Run these from the solution root:
 
 ```bash
 # Build
 dotnet build
 
-# Run (with hot reload)
-dotnet watch run
+# Run tests
+dotnet test
 
-# Format
+# Format code
 dotnet format
 
-# Test (if tests exist)
-dotnet test
+# Run web app
+dotnet run --project src/Web
 ```
 
-## Blazor Conventions
+## Conventions
 
+### Clean Architecture Layers
+- **Shared**: Domain entities, interfaces, extensions (no external dependencies)
+- **Web**: Blazor UI, depends on Shared only
+- **Web.Tests**: Tests for both projects
+
+### Blazor Conventions
 - Use `@page` directive for routable components
 - Prefer static SSR by default; add interactivity only when needed
 - Use `<PageTitle>` for SEO-friendly page titles
 - Keep components small and focused
 - Use Tailwind utility classes for styling
+
+### Central Package Management
+- All NuGet package versions defined in `Directory.Packages.props`
+- Project files use `<PackageReference Include="..." />` without Version attribute
+- Prevents version drift across projects
+
+### Code Style
+- Defined in `.editorconfig`
+- Use `var` when type is apparent
+- Prefer expression-bodied members for single-line methods
+- Interface names start with `I`
 
 ## Final Response Requirements
 
@@ -64,5 +83,5 @@ Include:
 
 - What you changed (1–5 bullets)
 - Why you changed it
-- How you verified it (exact commands + results; if you couldn't run commands, say so)
-- Any follow-ups or risks (if applicable)
+- How you verified it (exact commands + results)
+- Any follow-ups or risks

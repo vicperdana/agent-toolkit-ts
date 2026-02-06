@@ -1,12 +1,40 @@
-node_modules/
+# .NET build artifacts
+**/bin/
+**/obj/
+*.user
+*.suo
+*.cache
+*.log
+publish/
+
+# Node/Tailwind artifacts
 **/node_modules/
-**/dist/
-**/.vite/
-**/.turbo/
+package-lock.json
+bun.lockb
+
+# Compiled CSS (generated from Tailwind source)
+**/wwwroot/css/
+
+# IDE
+.vs/
+.vscode/
+*.swp
+.idea/
+
+# macOS
 .DS_Store
+
+# Environment files
 .env
 .env.local
 .env.*.local
-.azure
 
-**/.playwright-cli/
+# User secrets
+appsettings.*.local.json
+
+# Test results
+TestResults/
+coverage/
+
+# Azure
+.azure
