@@ -9,6 +9,17 @@ Guidelines for AI assistants (e.g., Codex, GitHub Copilot) contributing to this 
 - Prefer existing repo patterns over general best practices
 - Don't add dependencies unless clearly necessary
 
+## Constitutional Principles (Non-Negotiable)
+
+These rules are **immutable** and apply to all code — human or AI-generated.
+
+1. **Shared-First** — Domain logic starts in `src/Shared/` (entities, interfaces, extensions). No business rules in the Web project without first being defined in Shared.
+2. **Test-First** — Write tests before implementation. Unit tests in `UnitTests/`, component tests in `ComponentTests/`. Red → Green → Refactor.
+3. **SSR-First** — All Blazor components use static Server-Side Rendering by default. Interactive render modes (`@rendermode InteractiveServer`) require explicit justification.
+4. **Simplicity** — Maximum 3 projects (Web, Shared, Web.Tests). No speculative features, no future-proofing. Additional projects require documented justification.
+5. **Anti-Abstraction** — Use ASP.NET Core features directly. No repository pattern, mediator, or CQRS unless the requirement explicitly demands it. One entity class per domain concept.
+6. **CLI Tooling** — All operations via `dotnet build`, `dotnet test`, `dotnet format`. No IDE-specific tooling required.
+
 ## Tech Stack
 
 - **Framework**: ASP.NET Core 10.0 (LTS) with Blazor Web App
@@ -76,6 +87,12 @@ dotnet run --project src/Web
 - Use `var` when type is apparent
 - Prefer expression-bodied members for single-line methods
 - Interface names start with `I`
+
+### Spec-Driven Development
+- Use the spec-driven workflow (Requirements → Design → Tasks) for new features
+- Templates are in `.specs/templates/`; specs go in `.specs/features/{NNN}-{feature-name}/`
+- Use `@speckit-specify` agent to create requirements from feature ideas
+- See `docs/sdd-workflow.md` for the full workflow guide
 
 ## Final Response Requirements
 

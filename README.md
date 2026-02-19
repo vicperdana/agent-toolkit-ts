@@ -28,7 +28,11 @@ A .NET 10 Blazor Web App starter template using Clean Architecture patterns.
 ├── AgentToolkit.sln         # Solution file
 ├── Directory.Build.props    # Shared build properties
 ├── Directory.Packages.props # Central Package Management
-└── global.json              # SDK version pin
+├── global.json              # SDK version pin
+├── .specs/                  # Spec-driven development
+│   ├── templates/           # Requirements, design, tasks templates
+│   └── features/            # Feature specifications
+└── docs/                    # Project documentation
 ```
 
 ## Prerequisites
@@ -75,6 +79,16 @@ This project follows **Clean Architecture** principles:
 - **Web.Tests**: Tests for both Web and Shared projects
 
 The architecture is designed to be scalable - Shared can be split into ApplicationCore + Infrastructure as the project grows.
+
+## Spec-Driven Development
+
+This project uses a **spec-driven development** workflow for structured feature development:
+
+1. **Requirements** — Define what to build (user stories + EARS acceptance criteria)
+2. **Design** — Define how to build it (architecture, components, tests)
+3. **Tasks** — Break into numbered implementation steps
+
+Each phase requires approval before proceeding. See [docs/sdd-workflow.md](docs/sdd-workflow.md) for the full guide and [`.specs/features/001-sample-feature/`](.specs/features/001-sample-feature/) for an example.
 
 ## References
 
